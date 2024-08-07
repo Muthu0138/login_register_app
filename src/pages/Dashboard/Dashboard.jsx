@@ -1,28 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { UserdataAPI } from '../../services/Api'
+import NavBar from '../../components/NavBar/NavBar.jsx'
 
 export default function Dashboard() {
-    return (
-        <>
-            <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">JVLcode</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                    <ul class="navbar-nav mr-auto"  >
-                        <li class="nav-item"><a class="nav-link" >Register</a></li>
-                        <li><a class="nav-link" href="javascript:void(0);" >Login</a></li>
-                        <li class="nav-item"><a class="nav-link" >Dashboard</a></li>
-                        <li><a class="nav-link" href="javascript:void(0);"  >Logout</a></li>
-                    </ul>
+    const[user,setUser] = useState({name:"" , email:"",localId:""})
 
-                </div>
-            </nav>
-            <main role="main" class="container mt-5">
-                <div class="container">
-                    <div class="text-center mt-5">
+    useEffect(()=>{
+        UserdataAPI().then((res)=>{
+            setUser({
+                name:res.data.users[0].displayName,
+                email:res.data.users[0].email,
+                localId:res.data.users[0].localId
+            })
+        })
+    },[])
+    return ( 
+        <>
+            <NavBar/>
+            <main role="main" className="container mt-5">
+                <div className="container">
+                    <div className="text-center mt-5">
                         <h3>Dashboard page</h3>
-                        <p class="text-bold " >Hi Unnamed user, your Firebase ID is %localID%</p>
+                        {user.email && user.localId?
+                        (<div>
+                            <p className="text-bold " >Hi User, your Firebase ID is {user.localId}</p>
+                            <p>your email id is {user.email}</p>
+                        </div>):<p>loading...</p>
+                        }
                     </div>
                 </div>
             </main>

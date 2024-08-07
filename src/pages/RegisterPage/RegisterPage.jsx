@@ -3,7 +3,7 @@ import "../RegisterPage/RegisterPage.css"
 import { RegisterApi } from '../../services/Api';
 import { storeUserData } from '../../services/Storage';
 import { isAuth } from '../../services/Auth';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 
 export default function RegisterPage() {
@@ -55,7 +55,7 @@ export default function RegisterPage() {
          });
       }
 
-      setError(errors);
+      setError({...errors});
    };
 
    const handleInputs = (event) => {
@@ -63,7 +63,7 @@ export default function RegisterPage() {
    };
 
    if (isAuth()){
-       <Navigate to ="/dashboard"/>
+      return <Navigate to ="/dashboard"/>
    }
    
 
@@ -119,7 +119,7 @@ export default function RegisterPage() {
                         </div>
                         <div className="clearfix"></div>
                         <div className="form-group">
-                           Already have an account? Please <a href="#">Login</a>
+                           Already have an account? Please <Link to="/login">Login</Link>
                         </div>
                      </form>
                   </div>

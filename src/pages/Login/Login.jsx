@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { LoginApi } from '../../services/Api';
 import { storeUserData } from '../../services/Storage';
 import { isAuth } from '../../services/Auth';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 
 export default function Login() {
@@ -52,7 +52,7 @@ export default function Login() {
            });
         }
   
-        setError(errors);
+        setError({...errors});
      };
 
      const handleInputs = (event) => {
@@ -60,13 +60,12 @@ export default function Login() {
      };
 
      if (isAuth()){
-        <Navigate to ="/dashboard"/>
+       return <Navigate to ="/dashboard"/>
     }
 
 
   return (
     <>
-      
         <section className="login-block">
             <div className="container">
                 <div className="row ">
@@ -108,7 +107,7 @@ export default function Login() {
                         </div>
                         <div className="clearfix"></div>
                         <div className="form-group">
-                        Create new account ? Please <a  href="#">Register</a>
+                        Create new account ? Please <Link to="/register">Register</Link>
                         </div>
                         </form>
                     </div>
